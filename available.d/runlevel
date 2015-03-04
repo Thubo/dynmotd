@@ -1,0 +1,4 @@
+#!/bin/bash
+runlevel=$(who -r | awk '{print $2}')
+
+echo -e "\033[0;35m+     \033[0;37mRunLevel \033[0;35m= \033[1;32m$runlevel"

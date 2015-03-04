@@ -1,0 +1,3 @@
+#!/bin/bash
+since=$(uptime -s 2>/dev/null)
+echo -e "\033[0;35m+    \033[0;37mLast Boot \033[0;35m= \033[1;32m$since"

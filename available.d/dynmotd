@@ -1,0 +1,57 @@
+#!/bin/bash
+
+hostname=$(hostname -s)
+user=$(whoami)
+date=$(date | awk '{print $1, $2, $3, $4, $6}' | column -t)
+release=$(cat /etc/*-release | grep PRETTY | cut -d = -f2)
+ip=$(ip addr | grep "inet " | grep -v 127 | cut -d / -f1 | awk '{print $2}' | sed ':a;N;$!ba;s/\n/, /g')
+kernel=$(uname -r)
+uptime=$(uptime | cut -d , -f 1 | cut -d ' ' -f3- | sed 's/up//g' | sed -e 's/^ *//' -e 's/ *$//')
+since=$(uptime -s 2>/dev/null)
+loadavg=$(cat /proc/loadavg | awk '{print $1, $2, $3}')
+model=$(cat /proc/cpuinfo | grep "^model name" | cut -d : -f 2 | head -n 1)
+# currfreq=$(cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq 2>/dev/null  | awk '{printf "%1.2f\n", $1/1000000 }')
+htcores=$(cat /proc/cpuinfo | grep "model name" | wc -l)
+cores=$(( $htcores / 2 ))
+mem=$(cat /proc/meminfo | grep MemTotal | awk {'print int($2/1000)'})
+# mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", $3/$2 * 100.0) }') # excluding buffers and cache
+mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", ($3-$6-$7)/$2 * 100.0) }') # including buffers and cache
+root_pro=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $5}')
+root_tot=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $2}')
+runlevel=$(who -r | awk '{print $2}')
+selinux=$(if [[ $(which sestatus > /dev/null 2>&1) ]]; then sestatus 2>/dev/null | grep "^SELinux status" | awk '{print $NF}'; else echo "No selinux"; fi)
+users=$(who -u | grep -v root | awk '{print $1}' | sort -u | wc -l)
+shells=$(who -u | grep -v root | awk '{print $1}' |  wc -l)
+last_login=$(lastlog -u $USER | grep $USER | awk '{print $4, $5, $6, $7, $9}' | column -t)
+last_f2b=$(if [[ -e /var/log/fail2ban.log ]]; then tail -n1 /var/log/fail2ban.log || echo "Permission denied"; else echo "No Fail2ban"; fi)
+
+# Clear the screen
+echo -en "\ec"
+# Print the dynmotd information
+echo -e " \033[0;35m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ \033[0;35m+         \033[0;37mHost \033[0;35m= \033[1;32m$hostname
+ \033[0;35m+         \033[0;37mUser \033[0;35m= \033[1;32m$user
+ \033[0;35m+   \033[0;37mLast Login \033[0;35m= \033[1;32m$last_login
+ \033[0;35m+         \033[0;37mDate \033[0;35m= \033[1;32m$date
+ \033[0;35m+           \033[0;37mOS \033[0;35m= \033[1;32m$release
+ \033[0;35m+           \033[0;37mIP \033[0;35m= \033[1;32m$ip
+ \033[0;35m+       \033[0;37mKernel \033[0;35m= \033[1;32m$kernel
+ \033[0;35m+       \033[0;37mUptime \033[0;35m= \033[1;32m$uptime
+ \033[0;35m+    \033[0;37mLast Boot \033[0;35m= \033[1;32m$since
+ \033[0;35m+     \033[0;37mLoad Avg \033[0;35m= \033[1;32m$loadavg
+ \033[0;35m+          \033[0;37mCPU \033[0;35m= \033[1;32m`echo 2x $model total $cores CPU-Cores / $htcores HT-Cores `
+ \033[0;35m+       \033[0;37mMemory \033[0;35m= \033[1;32m`echo $mem_free used of ${mem}M`
+ \033[0;35m+         \033[0;37mDisk \033[0;35m= \033[1;32m`echo $root_pro used of $root_tot`
+ \033[0;35m+     \033[0;37mRunLevel \033[0;35m= \033[1;32m$runlevel
+ \033[0;35m+      \033[0;37mSELinux \033[0;35m= \033[1;32m$selinux
+ \033[0;35m+     \033[0;37mFail2ban \033[0;35m= \033[1;32m$last_f2b
+ \033[0;35m+ \033[0;37mUsers/Shells \033[0;35m= \033[1;32m`echo $users/$shells`
+ \033[0;35m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
+
+ if [[ $(which screen > /dev/null 2>&1) == 0 ]]; then
+   if [[ $(screen -ls | sed -n -r 's/\x09([0-9]+)\.([[:alnum:]]+)[[:blank:]]\(([[:alnum:]]+)\)/\2: \3/p' | wc -l) > 0 ]]; then
+   echo -e " \033[0;35m++++++++++++++++++++++++++++++++++++ Screen ++++++++++++++++++++++++++++++++++++\e[00m
+   $(screen -ls | sed -n -r 's/\x09([0-9]+)\.([[:alnum:]]+)[[:blank:]]\(([[:alnum:]]+)\)/ \\033[0;35m+\\033[0;37m     \3\\033[0;35m =\\033[0;37m \\033[1;32m\2\\033[0;37m/p')
+   \033[0;35m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"
+   fi
+ fi

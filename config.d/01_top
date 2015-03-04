@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Clear the screen
+echo -en "\ec"
+
+# Print the dynmotd information
+echo -e "\033[0;35m++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\e[00m"

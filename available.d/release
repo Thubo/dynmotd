@@ -1,0 +1,4 @@
+#!/bin/bash
+release=$(cat /etc/*-release | grep PRETTY | cut -d = -f2)
+
+echo -e "\033[0;35m+           \033[0;37mOS \033[0;35m= \033[1;32m$release"

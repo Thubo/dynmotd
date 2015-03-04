@@ -1,0 +1,4 @@
+#!/bin/bash
+last_login=$(lastlog -u $USER | grep $USER | awk '{print $4, $5, $6, $7, $9}' | column -t)
+
+ echo -e "\033[0;35m+   \033[0;37mLast Login \033[0;35m= \033[1;32m$last_login"

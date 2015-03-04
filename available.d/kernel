@@ -1,0 +1,4 @@
+#!/bin/bash
+kernel=$(uname -r)
+
+echo -e "\033[0;35m+       \033[0;37mKernel \033[0;35m= \033[1;32m$kernel"

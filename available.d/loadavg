@@ -1,0 +1,4 @@
+#!/bin/bash
+loadavg=$(cat /proc/loadavg | awk '{print $1, $2, $3}')
+
+echo -e "\033[0;35m+     \033[0;37mLoad Avg \033[0;35m= \033[1;32m$loadavg"

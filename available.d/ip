@@ -1,0 +1,4 @@
+#!/bin/bash
+ip=$(ip addr | grep "inet " | grep -v 127 | cut -d / -f1 | awk '{print $2}' | sed ':a;N;$!ba;s/\n/, /g')
+
+echo -e "\033[0;35m+           \033[0;37mIP \033[0;35m= \033[1;32m$ip"

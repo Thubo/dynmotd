@@ -1,0 +1,3 @@
+#!/bin/bash
+hostname=$(hostname -s)
+echo -e "\033[0;35m+         \033[0;37mHost \033[0;35m= \033[1;32m$hostname"
