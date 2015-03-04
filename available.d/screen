@@ -4,7 +4,7 @@ counter=1
 
 if [[ $(screen -ls | grep "tached" | wc -l) -ne 0 ]]; then
 
- screen -ls | grep "tached" | awk '{print $4, $1}' | sed -r 's/[0-9]+\.//' | while read i; do
+ screen -ls | grep "tached" | awk '{print $NF, $1}' | sed -r 's/[0-9]+\.//' | while read i; do
   echo -e "\033[0;35m+     \033[0;37mScreen $counter \033[0;35m=\033[1;32m $i"
   counter=$(( $counter+1 ))
  done
