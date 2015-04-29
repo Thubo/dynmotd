@@ -2,6 +2,8 @@
 
 counter=1
 
+if type screen > /dev/null 2>&1; then
+
 if [[ $(screen -ls | grep "tached" | wc -l) -ne 0 ]]; then
 
  screen -ls | grep "tached" | awk '{print $NF, $1}' | sed -r 's/[0-9]+\.//' | while read i; do
@@ -11,6 +13,5 @@ if [[ $(screen -ls | grep "tached" | wc -l) -ne 0 ]]; then
 
 fi
 
-   # if [[ $(screen -ls | sed -n -r 's/\x09([0-9]+)\.([[:alnum:]]+)[[:blank:]]\(([[:alnum:]]+)\)/\2: \3/p' | wc -l) > 0 ]]; then
-   # $(screen -ls | sed -n -r 's/\x09([0-9]+)\.([[:alnum:]]+)[[:blank:]]\(([[:alnum:]]+)\)/ \\033[0;35m+\\033[0;37m     \3\\033[0;35m =\\033[0;37m \\033[1;32m\2\\033[0;37m/p')
-   # fi
+fi
+

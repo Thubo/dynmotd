@@ -10,8 +10,10 @@ if [[ -r /etc/redhat-release ]]; then
   done < <(find /etc/redhat-release -type f)
 elif [[ -r /etc/lsb-release ]]; then
   while read -r i; do
-    if $(grep PRETTY $i > /dev/null 2>&1); then
+    if grep -q PRETTY $i; then
       release=$(cat $i | grep PRETTY | cut -d = -f2)
+    elif grep -q DESCRIPTION $i; then
+      release=$(cat $i | grep DESCRIPTION | cut -d = -f2)
     else
       release=$(cat $i)
     fi
