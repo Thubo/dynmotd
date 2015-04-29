@@ -1,4 +1,11 @@
 #!/bin/bash
-release=$(cat /etc/*-release | grep PRETTY | cut -d = -f2)
+
+while read -r i; do
+  if $(grep PRETTY $i > /dev/null 2>&1); then
+    release=$(cat $i | grep PRETTY | cut -d = -f2)
+  else
+    release=$(cat $i)
+  fi
+done < <(find /etc/*-release -type f)
 
 echo -e "\033[0;35m+           \033[0;37mOS \033[0;35m= \033[1;32m$release"
