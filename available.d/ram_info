@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FREE_VERSION=$(free -V | awk '{print $2}')
+FREE_VERSION=$(free -V | awk '{print $NF}')
 
 mem=$(cat /proc/meminfo | grep MemTotal | awk {'print int($2/1000)'})
 # mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", $3/$2 * 100.0) }') # excluding buffers and cache
