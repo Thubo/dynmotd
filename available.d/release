@@ -7,7 +7,7 @@ if [[ -r /etc/redhat-release ]]; then
     else
       release=$(cat $i)
     fi
-  done < <(find /etc/redhat-release -type f)
+  done < <(find /etc/redhat-release -type f -or -type l)
 elif [[ -r /etc/lsb-release ]]; then
   while read -r i; do
     if grep -q PRETTY $i; then
