@@ -1,6 +1,14 @@
 #!/bin/bash
+
+FREE_VERSION=$(free -V | awk '{print $2}')
+
 mem=$(cat /proc/meminfo | grep MemTotal | awk {'print int($2/1000)'})
 # mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", $3/$2 * 100.0) }') # excluding buffers and cache
-mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", ($3-$6-$7)/$2 * 100.0) }') # including buffers and cache
+
+if [[ $FREE_VERSION == "3.3.10" ]]; then
+  mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", ($2-$7)/$2 * 100.0) }') # excluding buffers and cache
+else
+  mem_free=$(free | grep Mem | awk '{ printf("%.2f%\n", ($3-$6-$7)/$2 * 100.0) }') # including buffers and cache
+fi
 
 echo -e "\033[0;35m+       \033[0;37mMemory \033[0;35m= \033[1;32m`echo $mem_free used of ${mem}M`"
