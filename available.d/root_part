@@ -1,5 +1,5 @@
 #!/bin/bash
-root_pro=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $5}')
-root_tot=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $2}')
+root_pro=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $5}' | uniq)
+root_tot=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $2}' | uniq)
 
 echo -e "\033[0;35m+         \033[0;37mDisk \033[0;35m= \033[1;32m`echo $root_pro used of $root_tot`"
