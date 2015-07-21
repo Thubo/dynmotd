@@ -18,6 +18,8 @@ elif [[ -r /etc/lsb-release ]]; then
       release=$(cat $i)
     fi
   done < <(find /etc/lsb-release -type f)
+elif type lsb_release > /dev/null 2>&1; then
+  release=$(lsb_release -a 2>/dev/null | grep Description | cut -d : -f2 | sed -e 's/^[ \t]*//')
 else
   release="Unidentified OS!"
 fi
