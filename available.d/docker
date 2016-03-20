@@ -1,0 +1,7 @@
+#!/bin/bash
+num_containers=$(if type docker > /dev/null 2>&1; then docker ps | tail -n +2 | wc -l; fi)
+
+if [[ $num_containers -gt 0 ]]; then
+  echo -e "\033[0;35m+       \033[0;37mDocker \033[0;35m= \033[1;32m$num_containers container(s) running"
+fi
+
