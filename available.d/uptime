@@ -1,4 +1,5 @@
 #!/bin/bash
 uptime=$(uptime | cut -d , -f 1 | cut -d ' ' -f3- | sed 's/up//g' | sed -e 's/^ *//' -e 's/ *$//')
+since=$(last reboot 2>&1 | grep -v '^[[:space:]]*$' | head -1 | cut -d " " -f 3- | tr -s ' ')
 
-echo -e "\033[0;35m+       \033[0;37mUptime \033[0;35m= \033[1;32m$uptime"
+echo -e "\033[0;35m+       \033[0;37mUptime \033[0;35m= \033[1;32m$uptime: since $since"

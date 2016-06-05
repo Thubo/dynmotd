@@ -1,4 +1,8 @@
 #!/bin/bash
-selinux=$(if type sestatus > /dev/null 2>&1; then sestatus 2>/dev/null | grep "^SELinux status" | awk '{print $NF}'; else echo "No selinux"; fi)
+# selinux=$(if type sestatus > /dev/null 2>&1; then sestatus 2>/dev/null | grep "^SELinux status" | awk '{print $NF}'; else echo "No selinux"; fi)
 
-echo -e "\033[0;35m+      \033[0;37mSELinux \033[0;35m= \033[1;32m$selinux"
+if type sestatus > /dev/null 2>&1; then
+  selinux=$(sestatus 2>/dev/null | grep "^SELinux status" | awk '{print $NF}')
+  echo -e "\033[0;35m+      \033[0;37mSELinux \033[0;35m= \033[1;32m$selinux"
+fi
+
