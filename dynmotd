@@ -13,10 +13,10 @@
 # ssh login.
 ###############################################################################
 
-function get_script_path
+# see https://stackoverflow.com/a/246128
+function get_current_dir
 {
 
-# see https://stackoverflow.com/a/246128
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
@@ -29,4 +29,4 @@ echo $DIR
 
 }
 
-find $(get_script_path)/config.d -type f -or -type l | sort | while read i; do $i; done
+find $(get_current_dir)/config.d -type f -or -type l | sort | while read i; do $i; done
