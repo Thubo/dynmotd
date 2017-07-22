@@ -1,4 +1,4 @@
 #!/bin/bash
-date=$(date | awk '{print $1, $2, $3, $4, $6}' | column -t | tr -s ' ')
+date=$(date)
 
  echo -e "\033[0;35m+         \033[0;37mDate \033[0;35m= \033[1;32m$date"
