@@ -2,10 +2,14 @@
 
 FREE_VERSION=$(free -V | awk '{print $NF}')
 
-mem=$(cat /proc/meminfo | grep MemTotal | awk {'print int($2/1000)'})
-# mem_free=$(free | grep Mem | awk '{ printf("%.2f%%\n", $3/$2 * 100.0) }') # excluding buffers and cache
+version_greater_equal()
+{
+    printf '%s\n%s\n' "$2" "$1" | sort --check=quiet --version-sort
+}
 
-if [[ $FREE_VERSION == "3.3.10" ]]; then
+mem=$(cat /proc/meminfo | grep MemTotal | awk {'print int($2/1000)'})
+
+if version_greater_equal $FREE_VERSION 3.3.10; then
   mem_free=$(free | grep Mem | awk '{ printf("%.2f%%\n", ($2-$7)/$2 * 100.0) }') # excluding buffers and cache
 else
   mem_free=$(free | grep Mem | awk '{ printf("%.2f%%\n", ($3-$6-$7)/$2 * 100.0) }') # including buffers and cache
