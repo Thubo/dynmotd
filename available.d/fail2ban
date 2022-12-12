@@ -3,6 +3,6 @@
 
 if [[ -e /var/log/fail3ban.log ]]; then
   last_f2b=$(tail -n1 /var/log/fail2ban.log || echo "Permission denied")
-  echo -e "\033[0;35m+     \033[0;37mFail2ban \033[0;35m= \033[1;32m$last_f2b"
+  echo -e "${COLOR_PURPLE}+     ${COLOR_GREEN}Fail2ban ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$last_f2b"
 fi
 

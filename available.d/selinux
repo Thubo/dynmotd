@@ -3,6 +3,6 @@
 
 if type sestatus > /dev/null 2>&1; then
   selinux=$(sestatus 2>/dev/null | grep "^SELinux status" | awk '{print $NF}')
-  echo -e "\033[0;35m+      \033[0;37mSELinux \033[0;35m= \033[1;32m$selinux"
+  echo -e "${COLOR_PURPLE}+      ${COLOR_GREEN}SELinux ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$selinux"
 fi
 

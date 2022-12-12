@@ -1,5 +1,4 @@
 #!/bin/bash
-uptime=$(uptime -p | cut -d ' ' -f 2-)
-since=$(uptime -s)
+uptime=$(uptime | tr -s ' ' | cut -d ' ' -f 3-4 | sed 's/,//g')
 
-echo -e "\033[0;35m+       \033[0;37mUptime \033[0;35m= \033[1;32m$uptime since $since"
+echo -e "${COLOR_PURPLE}+       ${COLOR_GREEN}Uptime ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$uptime"

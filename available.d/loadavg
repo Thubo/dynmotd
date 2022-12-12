@@ -1,4 +1,4 @@
 #!/bin/bash
-loadavg=$(cat /proc/loadavg | awk '{print $1, $2, $3}')
+loadavg=$(uptime | tr -s ' ' | awk '{print $(NF-2), $(NF-1), $NF}' | sed 's/,//g')
 
-echo -e "\033[0;35m+     \033[0;37mLoad Avg \033[0;35m= \033[1;32m$loadavg"
+echo -e "${COLOR_PURPLE}+     ${COLOR_GREEN}Load Avg ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$loadavg"

@@ -1,4 +1,4 @@
 #!/bin/bash
 date=$(date)
 
- echo -e "\033[0;35m+         \033[0;37mDate \033[0;35m= \033[1;32m$date"
+ echo -e "${COLOR_PURPLE}+         ${COLOR_GREEN}Date ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$date"

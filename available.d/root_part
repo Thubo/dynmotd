@@ -2,4 +2,4 @@
 root_pro=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $5}' | uniq)
 root_tot=$(df -Phl 2>>/dev/null | grep " /$" | awk '{print $2}' | uniq)
 
-echo -e "\033[0;35m+         \033[0;37mDisk \033[0;35m= \033[1;32m`echo $root_pro used of $root_tot`"
+echo -e "${COLOR_PURPLE}+         ${COLOR_GREEN}Disk ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}`echo $root_pro used of $root_tot`"

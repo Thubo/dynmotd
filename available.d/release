@@ -24,4 +24,4 @@ else
   release="Unidentified OS!"
 fi
 
-echo -e "\033[0;35m+           \033[0;37mOS \033[0;35m= \033[1;32m$release"
+echo -e "${COLOR_PURPLE}+           ${COLOR_GREEN}OS ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$release"
