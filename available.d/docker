@@ -1,5 +1,5 @@
 #!/bin/bash
-num_containers=$(if type docker > /dev/null 2>&1; then docker ps | tail -n +2 | wc -l; fi)
+num_containers=$(if type docker > /dev/null 2>&1 && docker > /dev/null 2>&1; then docker ps | tail -n +2 | wc -l; fi)
 
 if [[ $num_containers -gt 0 ]]; then
   echo -e "${COLOR_PURPLE}+       ${COLOR_GREEN}Docker ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$num_containers container(s) running"
