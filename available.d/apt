@@ -1,0 +1,7 @@
+#!/bin/bash
+num_upgradable=$(if type apt > /dev/null 2>&1; then apt list --upgradable 2>/dev/null | wc -l; fi)
+
+if [[ $num_upgradable -gt 0 ]]; then
+  echo -e "${COLOR_PURPLE}+     ${COLOR_GREEN}Packages ${COLOR_PURPLE}= ${COLOR_LIGHT_GREEN}$num_upgradable packages upgrades available"
+fi
+
